@@ -9,16 +9,14 @@ const Slider = () => {
   const [index, setIndex] = useState(0);
   const byDateDesc = data?.focus.sort((evtA, evtB) =>
     new Date(evtA.date) < new Date(evtB.date) ? -1 : 1
-  );
-  const nextCard = () => {
-    setTimeout(
-      () => setIndex(index < byDateDesc.length ? index + 1 : 0),
+  )|| [];// Initialise à un tableau vide si data.focus est undefined
+  useEffect(() => {
+  const nextCard = setTimeout(
+      () => setIndex(index < byDateDesc.length -1 ? index + 1 : 0), // ajout de -1 pour ne pas dépasser la taille du tableau
       5000
     );
-  };
-  useEffect(() => {
-    nextCard();
-  });
+    return () => clearTimeout(nextCard);
+  }, [index, byDateDesc.length]);
   return (
     <div className="SlideCardList">
       {byDateDesc?.map((event, idx) => (
@@ -42,10 +40,11 @@ const Slider = () => {
             <div className="SlideCard__pagination">
               {byDateDesc.map((_, radioIdx) => (
                 <input
-                  key={`${event.id}`}
+                  key={event.title.id} // Modif de l'id pour éviter les erreurs de clé
                   type="radio"
                   name="radio-button"
                   checked={idx === radioIdx}
+                  onChange={() => setIndex(radioIdx)} // Met à jour l'index de la carte active
                 />
               ))}
             </div>
