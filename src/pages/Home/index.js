@@ -13,7 +13,13 @@ import Modal from "../../containers/Modal";
 import { useData } from "../../contexts/DataContext";
 
 const Page = () => {
-  const {last} = useData()
+  const { data } = useData();  // Récupère les données depuis le contexte
+
+  // Trier les événements par date décroissante
+  const sortedEvents = data?.events?.slice().sort((a, b) => new Date(b.date) - new Date(a.date));
+
+  // Récupérer le dernier événement
+  const last = sortedEvents?.[0];
   return <>
     <header>
       <Menu />
@@ -115,14 +121,24 @@ const Page = () => {
     </main>
     <footer className="row">
       <div className="col presta">
-        <h3>Notre derniére prestation</h3>
-        <EventCard
-          imageSrc={last?.cover}
-          title={last?.title}
-          date={new Date(last?.date)}
-          small
-          label="boom"
-        />
+      <h3>Notre dernière prestation</h3>
+       {/* 
+            Vérification conditionnelle avant de rendre `EventCard` :
+            Nous vérifions que `last`, `last.cover`, et `last.title` sont définis pour éviter de passer des valeurs `undefined`
+            aux props qui sont marquées comme requises dans `EventCard`. Cela prévient les erreurs de prop-types.
+          */}
+          {last && last.cover && last.title ? (
+            <EventCard
+              imageSrc={last.cover}
+              title={last.title}
+              date={new Date(last.date)}
+              small
+              label={last.type}
+            />
+          ) : (
+            // Affiche un message si les données sont manquantes
+            <p>Aucun événement disponible</p>
+          )}
       </div>
       <div className="col contact">
         <h3>Contactez-nous</h3>
