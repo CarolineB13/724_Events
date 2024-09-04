@@ -28,4 +28,17 @@ describe("When Modal data is created", () => {
     );
     await screen.findByText("Conférence #productCON");
   });
+// nouveau test
+it("displays the event cover image with correct src and alt attributes", () => {
+  render(<ModalEvent event={data} />);
+  
+  // Récupère l'image par son data-testid
+  const imageElement = screen.getByTestId("card-image-testid");
+
+  // Vérifie que l'image a le bon src
+  expect(imageElement).toHaveAttribute("src","/images/stem-list-EVgsAbL51Rk-unsplash.png");
+
+  // Vérifie que l'image a le bon alt
+  expect(imageElement).toHaveAttribute("alt", "Conférence #productCON");
+});
 });

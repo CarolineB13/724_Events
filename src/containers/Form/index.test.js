@@ -27,3 +27,16 @@ describe("When Events is created", () => {
     });
   });
 });
+// nouveau test
+describe("When the form is sending", () => {
+  it("the submit button is disabled", async () => {
+    render(<Form />);
+    const button = await screen.findByTestId("button-test-id");
+
+    // Simule un clic sur le bouton pour déclencher l'envoi
+    fireEvent.click(button);
+
+    // Vérifie que le bouton est désactivé
+    expect(button).toBeDisabled();
+  });
+});

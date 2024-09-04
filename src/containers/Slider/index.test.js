@@ -41,4 +41,19 @@ describe("When slider is created", () => {
       "Oeuvre à la coopération entre le secteur public et le privé."
     );
   });
+  // nouveau test
+  it("displays all event cover images with correct src and alt attributes", async () => {
+    api.loadData = jest.fn().mockReturnValue(data);
+    render(
+      <DataProvider>
+        <Slider />
+      </DataProvider>
+    );
+
+    // Vérifie que chaque image de couverture a le bon src et alt
+    data.focus.forEach(async (event) => {
+      const imageElement = await screen.findByAltText(event.title);
+      expect(imageElement).toHaveAttribute("src", event.cover);
+    });
+  });
 });
