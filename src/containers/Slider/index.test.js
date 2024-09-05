@@ -23,6 +23,12 @@ const data = {
       date: "2022-01-29T20:28:45.744Z",
       cover: "/images/evangeline-shaw-nwLTVwb7DbU-unsplash1.png",
     },
+    {
+      title: "Sneakercraze market",
+      description: "Rencontres de spécialistes des Sneakers Européens.",
+      date: "2022-05-29T20:28:45.744Z",
+      cover: "/images/jakob-dalbjorn-cuKJre3nyYc-unsplash 1.png"
+  }
   ],
 };
 
@@ -39,6 +45,22 @@ describe("When slider is created", () => {
     await screen.findByText("janvier");
     await screen.findByText(
       "Oeuvre à la coopération entre le secteur public et le privé."
+    );
+  });
+
+  // nouveau test
+  it("a list card is displayed", async () => {
+    window.console.error = jest.fn();
+    api.loadData = jest.fn().mockReturnValue(data);
+    render(
+      <DataProvider>
+        <Slider />
+      </DataProvider>
+    );
+    await screen.findByText("Sneakercraze market");
+    await screen.findByText("mai");
+    await screen.findByText(
+      "Rencontres de spécialistes des Sneakers Européens."
     );
   });
   // nouveau test
