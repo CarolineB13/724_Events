@@ -29,16 +29,28 @@ describe("When Form is created", () => {
 
 
 describe("When a page is created", () => {
+
   it("a list of events is displayed", () => {
-    // to implement
+    render(<Home />);
+    const eventList = screen.getByTestId('event-list');
+    expect(eventList).toBeInTheDocument();
   })
+
   it("a list a people is displayed", () => {
-    // to implement
+    render(<Home />);
+    const peopleElements = screen.getAllByTestId('card-image-people-testid');
+    expect(peopleElements.length).toEqual(6);
   })
+
   it("a footer is displayed", () => {
-    // to implement
-  })
-  it("an event card, with the last event, is displayed", () => {
-    // to implement
-  })
+    const { container } = render(<Home />);
+    const footer = container.querySelector('footer');
+    expect(footer).toBeInTheDocument();
+  });
+
+it("an event card, with the last event, is displayed", () => {
+    render(<Home />);
+    const eventCard = screen.getByTestId('last-event');
+    expect(eventCard).toBeInTheDocument();
+});
 });
